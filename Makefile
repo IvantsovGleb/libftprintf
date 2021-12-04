@@ -1,31 +1,33 @@
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
-RM			= rm -f
+rm		= rm -f
 
-NAME 		= libftprintf.a
+name 	= libftprintf.a
 
-HEADER 		= libftprintf.h
+header 	= libftprintf.h
 
-SRCMODULES 	= ft_printf.c \
+sources = ft_printf.c \
 
-OBJMODULES = $(SRCMODULES:.c=.o)
+objects	= $(sources:.c=.o)
 
-all: $(NAME)
+subdirs	= ./libft
 
-$(NAME): $(OBJMODULES)
-	ar crs $(NAME) $?
+all: $(name)
 
-%.o: %.c $(HEADER)
-	$(MAKE) all -C ./libft
+$(name): $(objects)
+	ar crs $(name) $?
+
+$(objects): $(sources) $(header)
+	$(MAKE) -C $(subdirs)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(MAKE) clean -C ./libft
-	$(RM) *.o
+	$(MAKE) clean -C $(subdirs)
+	$(rm) *.o
 
 fclean: clean
-	$(MAKE) fclean -C ./libft
-	$(RM) $(NAME)
+	$(MAKE) fclean -C $(subdirs)
+	$(rm) $(name)
 
 re: fclean all
 

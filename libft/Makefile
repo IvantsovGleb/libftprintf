@@ -41,21 +41,21 @@ SRCMODULES 	= ft_atoi.c \
 				ft_strlcpy.c \
 				ft_strrchr.c
 
-OBJMODULES = $(SRCMODULES:.c=.o)
+OBJMODULES = $(src:.c=.o)
 
-all: $(NAME)
+all: $(name)
 
-$(NAME): $(OBJMODULES)
-	ar crs $(NAME) $?
+$(name): $(objects)
+	ar crs $(name) $?
 
-%.o: %.c $(HEADER)
+%.o: %.c $(header)
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
-	$(RM) *.o
+	$(rm) *.o
 
 fclean: clean
-	$(RM) $(NAME)
+	$(rm) $(name)
 
 re: fclean all
 		
