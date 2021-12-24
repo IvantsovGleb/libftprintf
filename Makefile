@@ -6,7 +6,7 @@ NAME 		= libftprintf.a
 
 HEADER 		= libftprintf.h
 
-SRCMODULES 	= ft_printf.c \
+SRCMODULES 	= ft_printf.c
 
 OBJMODULES = $(SRCMODULES:.c=.o)
 
