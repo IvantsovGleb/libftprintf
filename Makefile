@@ -6,7 +6,7 @@ name 	= libftprintf.a
 
 header 	= libftprintf.h
 
-sources = ft_printf.c \
+sources = ft_printf.c
 
 objects	= $(sources:.c=.o)
 
