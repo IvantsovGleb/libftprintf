@@ -1,12 +1,12 @@
-CFLAGS		= -Wall -Wextra -Werror
+cflags		= -Wall -Wextra -Werror
 
-RM			= rm -f
+rm			= rm -f
 
-NAME 		= libft.a
+name 		= libft.a
 
-HEADER 		= libft.h
+header 		= libft.h
 
-SRCMODULES 	= ft_atoi.c \
+srcmodules 	= ft_atoi.c \
 				ft_isascii.c \
 				ft_memcmp.c \
 				ft_putendl_fd.c \
@@ -41,14 +41,15 @@ SRCMODULES 	= ft_atoi.c \
 				ft_strlcpy.c \
 				ft_strrchr.c
 
-OBJMODULES = $(src:.c=.o)
+objmodules = $(srcmodules:.c=.o)
+
 
 all: $(name)
 
-$(name): $(objects)
+$(name): $(objmodules)
 	ar crs $(name) $?
 
-%.o: %.c $(header)
+$(objmodules): %.o: %.c $(header)
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
