@@ -20,7 +20,6 @@ int     ft_printf(const char *format, ...)
     va_start(args, format);
     head = (void *) 0;
     head = ft_split_format(head, format);
-    ft_print(head);
     printf("\n");
     lst = head;
     while (lst->next)
@@ -39,7 +38,9 @@ int     ft_printf(const char *format, ...)
 
 int     main()
 {
-    ft_printf("HELL%c %s%s%s %%%%", 'O', "Hello", "Gleb", "Moscow");
+    int     value = 123;
+    printf("HELL%c %s%s%s %%%% %p\n", 'O', "Hello", "Gleb", "Moscow", &value);
+    ft_printf("HELL%c %s%s%s %%%% %p\n", 'O', "Hello", "Gleb", "Moscow", &value);
 
 //    ft_print(ft_split_format(head, " %c "));
 //    ft_print(ft_split_format(head, " %c"));

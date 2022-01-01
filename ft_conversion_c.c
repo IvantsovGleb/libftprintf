@@ -9,5 +9,5 @@ char    *ft_char(int c)
         return ((void *) 0);
     chr[0] = c;
     chr[1] = 0;
-    return ((char *) chr);
+    return ((char *)chr);
 }

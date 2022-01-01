@@ -1,5 +1,5 @@
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef PRINTF_H
+# define PRINTF_H
 
 # define OCTAL 8
 # define DECIMAL 10
@@ -8,13 +8,14 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
-//typedef char *(*f)(void *);
 
 t_list  *ft_split_format(t_list *head, const char *format);
 char    *ft_recognize_conversion(void *content, va_list *args);
 
 char    *ft_char(int c);
-char    *ft_address(void *address);
+char    *ft_address(void *address, char *buffer);
+char    *ft_utoa(unsigned int value, char *buffer, int radix);
+char    *ft_utoa_upper(unsigned int value, char *buffer, int radix);
 
 int     ft_printf(const char *, ...);
 

@@ -1,5 +1,4 @@
 #include "printf.h"
-#include <stdio.h>
 
 t_list      *ft_split_format(t_list *head, const char *format)
 {
@@ -30,28 +29,28 @@ char    *ft_recognize_conversion(void *content, va_list *args)
 {
     char    c;
     char    *offset;
+    char    buffer[3 * sizeof(int) + 1];
 
     offset = ft_strchr((const char *)content, '%');
-    if (offset)
-    {
-        *offset = '\0';
-        c = *(offset + 1);
-        if (c == 'c')
-            return (ft_char(va_arg(*args, int)));
-        if (c == 's')
-            return (va_arg(*args, char *));
-//        if (c == 'p')
-//            return (ft_address(va_arg(*args, void *)));
-        if (c == 'd' || c == 'i')
-        {
-            // ToDo()
-        }
-        if (c == 'u' || c == 'x' || c == 'X')
-        {
-            // ToDo()
-        }
-        if (c == '%')
-            return (ft_char('%'));
-    }
-    return (content);
+    if (!offset)
+        return (content);
+    *offset = '\0';
+    c = *(offset + 1);
+    if (c == 'c')
+        return (ft_char(va_arg(*args, int)));
+    if (c == 's')
+        return (va_arg(*args, char *));
+    if (c == 'p')
+        return (ft_strjoin("0x", ft_utoa((unsigned long)va_arg(*args, void *), buffer, HEX)));
+    if (c == 'd' || c == 'i')
+        return (ft_itoa(va_arg(*args, int)));
+    if (c == 'u')
+        return (ft_utoa(va_arg(*args, unsigned int), buffer, DECIMAL));
+    if (c == 'x')
+        return (ft_utoa(va_arg(*args, unsigned int), buffer, HEX));
+    if (c == 'X')
+        return (ft_utoa_upper(va_arg(*args, unsigned int), buffer, HEX));
+    if (c == '%')
+        return (ft_char('%'));
+    return ((void *) 0);
 }
