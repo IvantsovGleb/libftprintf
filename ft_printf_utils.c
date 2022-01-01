@@ -29,7 +29,7 @@ char    *ft_recognize_conversion(void *content, va_list *args)
 {
     char    c;
     char    *offset;
-    char    buffer[3 * sizeof(int) + 1];
+    char    buffer[sizeof(unsigned int) * 4 + 1];
 
     offset = ft_strchr((const char *)content, '%');
     if (!offset)
