@@ -1,6 +1,6 @@
 #include "printf.h"
 
-char    *ft_utoa(unsigned int value, char *buffer, int radix)
+char    *ft_utoa(unsigned long value, char *buffer, int radix)
 {
     char            *digits;
 
@@ -18,7 +18,7 @@ char    *ft_utoa(unsigned int value, char *buffer, int radix)
     return ((void *) 0);
 }
 
-char    *ft_utoa_upper(unsigned int value, char *buffer, int radix)
+char    *ft_utoa_upper(unsigned long value, char *buffer, int radix)
 {
     char    *s;
 

@@ -2,7 +2,7 @@
 
 char    *ft_char(int c)
 {
-    int *chr;
+    int     *chr;
 
     chr = malloc(2);
     if (!chr)

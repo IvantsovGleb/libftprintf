@@ -33,7 +33,7 @@ char    *ft_recognize_conversion(void *content, va_list *args)
 
     offset = ft_strchr((const char *)content, '%');
     if (!offset)
-        return (content);
+        return ((char *)content);
     *offset = '\0';
     c = *(offset + 1);
     if (c == 'c')
@@ -41,7 +41,7 @@ char    *ft_recognize_conversion(void *content, va_list *args)
     if (c == 's')
         return (va_arg(*args, char *));
     if (c == 'p')
-        return (ft_strjoin("0x", ft_utoa((unsigned long)va_arg(*args, void *), buffer, HEX)));
+        return (ft_address(va_arg(*args, void *), buffer));
     if (c == 'd' || c == 'i')
         return (ft_itoa(va_arg(*args, int)));
     if (c == 'u')
