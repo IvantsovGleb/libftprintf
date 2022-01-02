@@ -12,7 +12,7 @@
 t_list  *ft_split_format(t_list *head, const char *format);
 char    *ft_recognize_conversion(void *content, va_list *args);
 
-char    *ft_char(int c);
+char    *ft_char(char *content, int c);
 char    *ft_address(void *address, char *buffer);
 char    *ft_utoa(unsigned long value, char *buffer, int radix);
 char    *ft_utoa_upper(unsigned long value, char *buffer, int radix);
