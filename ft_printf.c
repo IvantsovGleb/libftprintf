@@ -1,13 +1,12 @@
 #include "ft_printf.h"
 
-#include "limits.h"
 #include <stdio.h>
 
 int  ft_printf(const char *format, ...)
 {
     char        *s;
+    int         i;
     va_list     args;
-    int      i;
 
     va_start(args, format);
     i = 0;
@@ -15,15 +14,16 @@ int  ft_printf(const char *format, ...)
     {
         if (*format == '%' && ft_strchr("cspdiuxX%", *(format + 1)))
         {
-            s = ft_recognize_conversion((int)(*(format++)), &args);
-            i += ft_strlen(s);
+            s = ft_recognize_conversion((int)(*++format), &args);
             ft_putstr_fd(s, 1);
+            i += ft_strlen(s);
             free(s);
+            format++;
         }
         else
         {
-            ft_putchar_fd(*format, 1);
-            format++;
+            ft_putchar_fd(*format++, 1);
+            i++;
         }
     }
     va_end(args);
@@ -32,14 +32,14 @@ int  ft_printf(const char *format, ...)
 
 int     main()
 {
-
+//
 //    printf("TEST 1\n");
 //    printf("len %d\n", ft_printf("%c\n", '0'));
 //    printf("len %d\n", printf("%c\n", '0'));
 //
-    printf("TEST 2\n");
-    ft_printf(" %c \n", '0');
-    printf(" %c \n", '0');
+//    printf("TEST 2\n");
+//    ft_printf(" %c \n", '0');
+//    printf(" %c \n", '0');
 //
 //    printf("TEST 3\n");
 //    ft_printf(" %c\n", '0' - 256);
@@ -69,7 +69,7 @@ int     main()
 //    printf("TEST 9\n");
 //    ft_printf(" %c %c %c \n", 0, '1', '2');
 //    printf(" %c %c %c \n", 0, '1', '2');
-
+//
 //    char *s2 = "Mussum Ipsum, cacilds vidis litro abertis. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Atirei o pau no gatis, per gatis num morreus.";
 //
 //    printf("TEST 1\n");
@@ -108,11 +108,11 @@ int     main()
 //    ft_printf(" %s %s %s %s %s \n", " - ", "", "4", "", "2 ");
 //    printf(" %s %s %s %s %s \n", " - ", "", "4", "", "2 ");
 //
-//    printf("TEST 10\n");
-//    ft_printf(" NULL %s NULL \n", NULL);
-//    printf(" NULL %s NULL \n", NULL);
-
-
+    printf("TEST 10\n");
+    ft_printf(" NULL %s NULL \n", NULL);
+    printf(" NULL %s NULL \n", (char *)((void *)0));
+//
+//
 //    unsigned long   address = -1;
 //
 //    ft_printf(" %p \n", -1);
@@ -141,6 +141,6 @@ int     main()
 //
 //    ft_printf(" %p %p \n", 0, 0);
 //    printf(" %p %p \n", (void *)0, (void *)0);
-
+//
     return (0);
 }

@@ -25,7 +25,7 @@ char    *ft_utoa_upper(unsigned long value, char *buffer, int radix)
     s = ft_utoa(value, buffer, radix);
     if (!s)
         return ((void *) 0);
-    while (s)
+    while (*s)
     {
         *s = (char)ft_toupper(*s);
         s++;
