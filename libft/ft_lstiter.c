@@ -1,16 +1,12 @@
-//
-// Created by Gleb Ivantsov on 30.12.2021.
-//
-
 #include "libft.h"
 
-void    ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-    if (!f)
-        return ;
-    while (lst)
-    {
-        f(lst->content);
-        lst = lst->next;
-    }
+	if (!f)
+		return ;
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }

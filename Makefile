@@ -6,7 +6,7 @@ name 		= libftprintf.a
 
 header 		= ft_printf.h
 
-src			= ft_printf.c ft_conversion_p.c ft_utoa.c
+src			= ft_printf.c ft_printf_utils.c ft_utoa.c
 
 objs		= $(src:.c=.o)
 
