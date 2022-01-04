@@ -2,145 +2,80 @@
 
 #include <stdio.h>
 
+static char     *ft_recognize_conversion(int  c, va_list *args)
+{
+    char    buffer[sizeof(int) * 5 + 1];
+
+    if (c == 'c')
+        ft_putchar_fd(va_arg(*args, int), 1);
+    if (c == 's')
+        return (ft_strdup(va_arg(*args, char *)));
+    if (c == 'p')
+        return (ft_address(va_arg(*args, void *), &buffer[sizeof(int) * 5 + 1]));
+    if (c == 'd' || c == 'i')
+        return (ft_itoa(va_arg(*args, int)));
+    if (c == 'u')
+        return (ft_utoa(va_arg(*args, unsigned int), &buffer[sizeof(int) * 5 + 1], DECIMAL));
+    if (c == 'x')
+        return (ft_utoa(va_arg(*args, unsigned int), &buffer[sizeof(int) * 5 + 1], HEX));
+    if (c == 'X')
+        return (ft_utoa_upper(va_arg(*args, unsigned int), &buffer[sizeof(int) * 5 + 1], HEX));
+    if (c == '%')
+        ft_putchar_fd('%', 1);
+
+    return ((void *) 0);
+}
+
+static size_t      ft_putstr(char *s)
+{
+    size_t      count;
+
+    count = 0;
+    if (!s)
+        count++;
+    else
+    {
+        ft_putstr_fd(s, 1);
+        count = ft_strlen(s);
+        free(s);
+    }
+    return (count);
+}
+
 int  ft_printf(const char *format, ...)
 {
     char        *s;
-    int         i;
+    size_t      count;
     va_list     args;
 
     va_start(args, format);
-    i = 0;
+    count = 0;
     while (*format)
     {
-        if (*format == '%' && ft_strchr("cspdiuxX%", *(format + 1)))
+        if (*format == '%')
         {
             s = ft_recognize_conversion((int)(*++format), &args);
-            ft_putstr_fd(s, 1);
-            i += ft_strlen(s);
-            free(s);
+            count += ft_putstr(s);
             format++;
         }
         else
         {
             ft_putchar_fd(*format++, 1);
-            i++;
+            count++;
         }
     }
     va_end(args);
-    return (i);
+    return (count);
 }
 
 int     main()
 {
-//
-//    printf("TEST 1\n");
-//    printf("len %d\n", ft_printf("%c\n", '0'));
-//    printf("len %d\n", printf("%c\n", '0'));
-//
-//    printf("TEST 2\n");
-//    ft_printf(" %c \n", '0');
-//    printf(" %c \n", '0');
-//
-//    printf("TEST 3\n");
-//    ft_printf(" %c\n", '0' - 256);
-//    printf(" %c\n", '0' - 256);
-//
-//    printf("TEST 4\n");
-//    ft_printf("%c \n", '0' + 256);
-//    printf("%c \n", '0' + 256);
-//
-//    printf("TEST 5\n");
-//    ft_printf(" %c %c %c \n", '0', 0, '1');
-//    printf(" %c %c %c \n", '0', 0, '1');
-//
-//    printf("TEST 6\n");
-//    ft_printf(" %c %c %c \n", ' ', ' ', ' ');
-//    printf(" %c %c %c \n", ' ', ' ', ' ');
-//
-//    printf("TEST 7\n");
-//    ft_printf(" %c %c %c \n", '1', '2', '3');
-//    printf(" %c %c %c \n", '1', '2', '3');
-//    printf("\n");
-//
-//    printf("TEST 8\n");
-//    ft_printf(" %c %c %c \n", '2', '1', 0);
-//    printf(" %c %c %c \n", '2', '1', 0);
-//
-//    printf("TEST 9\n");
-//    ft_printf(" %c %c %c \n", 0, '1', '2');
-//    printf(" %c %c %c \n", 0, '1', '2');
-//
-//    char *s2 = "Mussum Ipsum, cacilds vidis litro abertis. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Atirei o pau no gatis, per gatis num morreus.";
-//
-//    printf("TEST 1\n");
-//    ft_printf("%s\n", "");
-//    printf("%s\n", "");
-//
-//    printf("TEST 2\n");
-//    ft_printf(" %s\n", "");
-//    printf(" %s\n", "");
-//
-//    printf("TEST 3\n");
-//    ft_printf("%s \n", "");
-//    printf("%s \n", "");
-//
-//    printf("TEST 4\n");
-//    ft_printf(" %s \n", "");
-//    printf(" %s \n", "");
-//
-//    printf("TEST 5\n");
-//    ft_printf(" %s \n", "-");
-//    printf(" %s \n", "-");
-//
-//    printf("TEST 6\n");
-//    ft_printf(" %s %s \n", "", "-");
-//    printf(" %s %s \n", "", "-");
-//
-//    printf("TEST 7\n");
-//    ft_printf(" %s %s \n", " - ", "");
-//    printf(" %s %s \n", " - ", "");
-//
-//    printf("TEST 8\n");
-//    ft_printf(" %s %s %s %s %s\n", " - ", "", "4", "", s2);
-//    printf(" %s %s %s %s %s\n", " - ", "", "4", "", s2);
-//
-//    printf("TEST 9\n");
-//    ft_printf(" %s %s %s %s %s \n", " - ", "", "4", "", "2 ");
-//    printf(" %s %s %s %s %s \n", " - ", "", "4", "", "2 ");
-//
-    printf("TEST 10\n");
+
+//******************************************************************
+    printf("category: s TEST 10\n");
     ft_printf(" NULL %s NULL \n", NULL);
     printf(" NULL %s NULL \n", (char *)((void *)0));
-//
-//
-//    unsigned long   address = -1;
-//
-//    ft_printf(" %p \n", -1);
-//    printf(" %p \n", (void *)address);
-//
-//    ft_printf(" %p \n", 1);
-//    printf(" %p \n", (void *)address);
-//
-//    ft_printf(" %p \n", 15);
-//    printf(" %p \n", (void *)address);
-//
-//    ft_printf(" %p \n", 16);
-//    printf(" %p \n", (void *)address);
-//
-//    ft_printf(" %p \n", 17);
-//    printf(" %p \n", (void *)address);
-//
-//    ft_printf(" %p %p \n", LONG_MIN, LONG_MAX);
-//    printf(" %p %p \n", LONG_MIN, LONG_MAX);
-//
-//    ft_printf(" %p %p \n", INT_MIN, INT_MAX);
-//    printf(" %p %p \n", INT_MIN, INT_MAX);
-//
-//    ft_printf(" %p %p \n", ULONG_MAX, -ULONG_MAX);
-//    printf(" %p %p \n", ULONG_MAX, -ULONG_MAX);
-//
-//    ft_printf(" %p %p \n", 0, 0);
-//    printf(" %p %p \n", (void *)0, (void *)0);
-//
+//******************************************************************
+
     return (0);
 }

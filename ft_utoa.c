@@ -1,5 +1,7 @@
 #include "ft_printf.h"
 
+#include <stdio.h>
+
 char    *ft_utoa(unsigned long value, char *buffer, int radix)
 {
     char            *digits;
@@ -8,6 +10,8 @@ char    *ft_utoa(unsigned long value, char *buffer, int radix)
     if (radix == OCTAL || radix == DECIMAL || radix == HEX)
     {
         *--buffer = '\0';
+        if (value == 0)
+            *--buffer = '0';
         while (value > 0)
         {
             *--buffer = digits[value % radix];
@@ -20,15 +24,18 @@ char    *ft_utoa(unsigned long value, char *buffer, int radix)
 
 char    *ft_utoa_upper(unsigned long value, char *buffer, int radix)
 {
+    char    *tmp;
     char    *s;
 
-    s = ft_utoa(value, buffer, radix);
-    if (!s)
+    tmp = ft_utoa(value, buffer, radix);
+    if (!tmp)
         return ((void *) 0);
-    while (*s)
+    s = tmp;
+    while (*tmp)
     {
-        *s = (char)ft_toupper(*s);
-        s++;
+        if (*tmp >= 97 && *tmp <= 122)
+            *tmp = (*tmp - 32);
+        tmp++;
     }
     return (s);
 }
