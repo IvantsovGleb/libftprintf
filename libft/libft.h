@@ -16,6 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# define OCTAL 8
+# define DECIMAL 10
+# define HEX 16
+
 typedef struct s_list
 {
 	void			*content;
@@ -56,6 +60,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+char	*ft_utoa(unsigned long value, char *buffer, int radix);
+char	*ft_utoa_upper(unsigned long value, char *buffer, int radix);
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

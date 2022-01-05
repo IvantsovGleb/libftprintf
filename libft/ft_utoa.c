@@ -1,25 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsinestr <fsinestr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 15:55:06 by fsinestr          #+#    #+#             */
+/*   Created: 2022/01/05 15:54:00 by fsinestr          #+#    #+#             */
 /*   Updated: 2022/01/05 15:58:11 by fsinestr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+char	*ft_utoa(unsigned long value, char *buffer, int radix)
 {
-	t_list	*node;
+	char	*digits;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
+	digits = "0123456789abcdef";
+	if (radix == OCTAL || radix == DECIMAL || radix == HEX)
+	{
+		*--buffer = '\0';
+		if (value == 0)
+			*--buffer = '0';
+		while (value > 0)
+		{
+			*--buffer = digits[value % radix];
+			value /= radix;
+		}
+		return (ft_strdup(buffer));
+	}
+	return ((void *) 0);
+}
+
+char	*ft_utoa_upper(unsigned long value, char *buffer, int radix)
+{
+	char	*tmp;
+	char	*s;
+
+	tmp = ft_utoa(value, buffer, radix);
+	if (!tmp)
 		return ((void *) 0);
-	node->content = content;
-	node->next = (void *)0;
-	return (node);
+	s = tmp;
+	while (*tmp)
+	{
+		if (*tmp >= 97 && *tmp <= 122)
+			*tmp = (*tmp - 32);
+		tmp++;
+	}
+	return (s);
 }
